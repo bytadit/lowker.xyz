@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Nunito } from "next/font/google";
+// import { ClerkProvider, auth } from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
+import { dark, neobrutalism } from "@clerk/themes";
 
-const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
+import Sidebar from "./Components/Sidebar/Sidebar";
+import GlobalStyleProvider from "./providers/GlobalStyleProvider";
+import ContextProvider from "./providers/ContextProvider";
+import NextTopLoader from "nextjs-toploader";
+import AuthButton from "./Components/Button/AuthButton";
+import { auth } from "@clerk/nextjs/server";
+import { login } from "./utils/Icons";
+
+const nunito = Nunito({
+  weight: ["400", "500", "600", "700", "800"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,12 +25,46 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  const { userId } = auth();
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
+      <html lang="en">
+        <head>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+          <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossOrigin="anonymous"
+            referrerPolicy="no-referrer"
+          />
+        </head>
+        <body className={nunito.className}>
+          <NextTopLoader
+            height={2}
+            color="#27AE60"
+            easing="cubic-bezier(0.53,0.21,0,1)"
+          />
+          <ContextProvider>
+            <GlobalStyleProvider>
+              <Sidebar isLogin={userId ? true : false}/>
+              {/* {userId && <Sidebar />} */}
+              <div className="w-full h-full">
+                {children}
+              </div>
+                {/* <AuthButton name="Signin" icon={login} click="signin"></AuthButton> */}
+            </GlobalStyleProvider>
+          </ContextProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
