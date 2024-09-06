@@ -158,6 +158,12 @@ const LowkerItemStyled = styled.div`
     }
   }
 
+  .menu svg,
+  .bookmark svg,
+  .view svg {
+    color: ${(props) => props.theme.colorPrimaryGreen};
+  }
+
   .details {
     display: flex;
     flex-direction: column;
@@ -176,6 +182,9 @@ const LowkerItemStyled = styled.div`
     }
 
     .location svg,
+    .menu svg,
+    .bookmark svg,
+    .view svg,
     .experience svg,
     .salary svg,
     .deadline svg,

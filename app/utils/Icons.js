@@ -23,6 +23,6 @@ export const trash = <i className="fa-solid fa-trash"></i>;
 export const admin = <i className="fa-solid fa-lock"></i>;
 export const linked = <i className="fa-brands fa-linkedin"></i>;
 export const mailIcon = <i className="fa-solid fa-envelope"></i>;
-export const plus = <i className="fa-solid fa-plus fa-beat-fade"></i>;
+export const plus = <i className="fa-solid fa-plus fa-beat-fade" style={{ color: "#6FCF97" }}></i>;
 export const light = <i className="fa-solid fa-lightbulb"></i>;
 export const bookmark = <i className="fa-solid fa-bookmark"></i>;
