@@ -5,7 +5,33 @@ import { formatDistanceToNow } from "date-fns";
 import React from "react";
 import styled from "styled-components";
 import formatDate from "@/app/utils/formatDate";
-import { FaMapMarkerAlt, FaBriefcase, FaMoneyBillWaveAlt, FaEye } from "react-icons/fa"; // Import icons
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
+  FaMapMarkerAlt,
+  FaBriefcase,
+  FaMoneyBillWaveAlt,
+  FaEye,
+  FaCalendarTimes,
+  FaEllipsisV,
+  FaEdit,
+  FaRegTrashAlt,
+} from "react-icons/fa"; // Import icons
 import { FaPerson, FaRegBookmark } from "react-icons/fa6"; // Import icons
 
 interface Props {
@@ -13,12 +39,14 @@ interface Props {
   title: string;
   company: string;
   description: string;
+  qualification: string;
   deadline: Date;
   datePosted: Date;
   duration: string;
   type: string;
   location: string;
   salary: string;
+  experience: string;
   source: string;
 }
 
@@ -27,15 +55,18 @@ export default function LowkerItem({
   title,
   company,
   description,
+  qualification,
   deadline,
   datePosted,
   duration,
   type,
   location,
   salary,
+  experience,
   source,
 }: Props) {
-  const { theme, deleteLowker, updateLowker, formatRupiah } = useGlobalState();
+  const { theme, deleteLowker, updateLowker, formatRupiah, checkDeadline } =
+    useGlobalState();
   const timeAgo = datePosted ? formatDistanceToNow(datePosted) : "Invalid date";
   return (
     <LowkerItemStyled theme={theme}>
@@ -49,6 +80,27 @@ export default function LowkerItem({
             <button className="bookmark">
               <FaRegBookmark />
             </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="menu">
+                  <FaEllipsisV />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-auto">
+                <DropdownMenuItem>
+                  <FaEdit className="mr-2 h-4 w-4" />
+                  <span>Edit</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    deleteLowker(id);
+                  }}
+                >
+                  <FaRegTrashAlt className="mr-2 h-4 w-4" />
+                  <span>Delete</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
         <p>{company}</p>
@@ -62,10 +114,13 @@ export default function LowkerItem({
           <FaMapMarkerAlt /> {location}
         </p>
         <p className="experience">
-          <FaBriefcase /> Min. 1 years of experience
+          <FaBriefcase /> {experience}
         </p>
         <p className="salary">
-          <FaMoneyBillWaveAlt /> {formatRupiah(salary)}
+          <FaMoneyBillWaveAlt /> {salary}
+        </p>
+        <p className="deadline fw-bold">
+          <FaCalendarTimes /> {checkDeadline(deadline)} left
         </p>
       </div>
       {/* <p className="recruiter-status">Rekruter aktif 12 menit lalu</p> */}
@@ -112,6 +167,7 @@ const LowkerItemStyled = styled.div`
     .location,
     .experience,
     .salary,
+    .deadline,
     .type {
       display: flex;
       flex-direction: row;
@@ -122,8 +178,10 @@ const LowkerItemStyled = styled.div`
     .location svg,
     .experience svg,
     .salary svg,
+    .deadline svg,
     .type svg {
-      color: ${(props) => props.theme.colorPrimary};
+      color: ${(props) => props.theme.colorPrimaryGreen};
+      margin-right: 0.5rem;
     }
   }
 

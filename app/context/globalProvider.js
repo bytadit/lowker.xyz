@@ -4,6 +4,7 @@ import themes from "./theme";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
+import { formatDistanceToNow } from "date-fns";
 
 export const GlobalContext = createContext();
 export const GlobalUpdateContext = createContext();
@@ -89,6 +90,13 @@ export const GlobalProvider = ({ children }) => {
     }).format(salary);
   }
 
+  const checkDeadline = (deadline) => {
+    const now = new Date();
+    return deadline < now 
+      ? "Expired Deadline" 
+      : formatDistanceToNow(deadline, { addSuffix: true });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -97,6 +105,7 @@ export const GlobalProvider = ({ children }) => {
         formatRupiah,
         deleteLowker,
         isLoading,
+        checkDeadline,
         updateLowker,
         modal,
         openModal,

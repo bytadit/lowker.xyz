@@ -11,11 +11,13 @@ function CreateContent() {
   const [title, setTitle] = useState("");
   const [company, setCompany] = useState("");
   const [description, setDescription] = useState("");
+  const [qualification, setQualification] = useState("");
   const [deadline, setDeadline] = useState("");
   const [duration, setDuration] = useState(0);
   const [type, setType] = useState("");
   const [location, setLocation] = useState("");
   const [salary, setSalary] = useState("");
+  const [experience, setExperience] = useState("");
   const [source, setSource] = useState("");
 
   const { theme, allLowkers, closeModal } = useGlobalState();
@@ -32,6 +34,9 @@ function CreateContent() {
       case "description":
         setDescription(value);
         break;
+      case "qualification":
+        setQualification(value);
+        break;
       case "deadline":
         setDeadline(value);
         break;
@@ -46,6 +51,9 @@ function CreateContent() {
         break;
       case "salary":
         setSalary(value);
+        break;
+      case "experience":
+        setExperience(value);
         break;
       case "source":
         setSource(value);
@@ -67,6 +75,7 @@ function CreateContent() {
       type,
       location,
       salary,
+      experience,
       source,
     };
 
@@ -111,7 +120,7 @@ function CreateContent() {
             placeholder="e.g., Tokopedia"
           />
         </div>
-        <div className="input-control col-span-4">
+        <div className="input-control col-span-2">
           <label htmlFor="description">Description</label>
           <textarea
             value={description}
@@ -122,8 +131,19 @@ function CreateContent() {
             placeholder="Job description"
           ></textarea>
         </div>
+        <div className="input-control col-span-2">
+          <label htmlFor="qualification">Qualification</label>
+          <textarea
+            value={qualification}
+            onChange={handleChange("qualification")}
+            name="qualification"
+            id="qualification"
+            rows={3} /* Reduce height */
+            placeholder="Job qualification"
+          ></textarea>
+        </div>
         <div className="col-span-4 grid grid-cols-3 gap-2">
-          <div className="input-control col-span-2">
+          <div className="input-control col-span-1">
             <label htmlFor="deadline">Deadline</label>
             <input
               value={deadline}
@@ -132,6 +152,20 @@ function CreateContent() {
               name="deadline"
               id="deadline"
             />
+          </div>
+          <div className="input-control col-span-1">
+            <label htmlFor="type">Type</label>
+            <select
+              name="type"
+              id="type"
+              value={type}
+              onChange={handleChange("type")}
+            >
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+              <option value="Freelance">Freelance</option>
+              <option value="Internship">Internship</option>
+            </select>
           </div>
           <div className="input-control col-span-1">
             <label htmlFor="duration">Duration</label>
@@ -144,37 +178,46 @@ function CreateContent() {
                 name="duration"
                 onChange={handleChange("duration")}
               />
-              <span className="input-label ml-2 mr-0 md:mr-6">months</span>
+              <span className="input-label mr-1">months</span>
             </div>
           </div>
         </div>
         <div className="input-control col-span-2">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="experience">Experience</label>
           <select
-            name="type"
-            id="type"
-            value={type}
-            onChange={handleChange("type")}
+            name="experience"
+            id="experience"
+            value={experience}
+            onChange={handleChange("experience")}
           >
-            <option value="Full Time">Full Time</option>
-            <option value="Part Time">Part Time</option>
-            <option value="Freelance">Freelance</option>
-            <option value="Internship">Internship</option>
+            <option value={"Undergraduate"}>{"Undergraduate"}</option>
+            <option value={"Freshgraduate"}>{"Freshgraduate"}</option>
+            <option value={"min. 1 year"}>{"min. 1 year"}</option>
+            <option value={"min. 2 years"}>{"min. 2 years"}</option>
+            <option value={"min. 5 years"}>{"min. 5 years"}</option>
+            <option value={"min. 10 years"}>{"min. 10 years"}</option>
           </select>
         </div>
         <div className="input-control col-span-2">
           <label htmlFor="salary">Salary</label>
-          <div className="input-wrapper">
-            <span className="input-label ml-0 md:mr-6">Rp.</span>
-            <input
-              type="number"
-              id="salary"
-              min={1}
-              value={salary}
-              name="salary"
-              onChange={handleChange("salary")}
-            />
-          </div>
+          <select
+            name="salary"
+            id="salary"
+            value={salary}
+            onChange={handleChange("salary")}
+          >
+            <option value={"< Rp.1000.000"}>{"< Rp.1000.000"}</option>
+            <option value={"Rp.1000.000 - Rp.3000.000"}>
+              {"Rp.1000.000 - Rp.3000.000"}
+            </option>
+            <option value={"Rp.3000.000 - Rp.5000.000"}>
+              {"Rp.3000.000 - Rp.5000.000"}
+            </option>
+            <option value={"Rp.5000.000 - Rp.10.000.000"}>
+              {"Rp.5000.000 - Rp.10.000.000"}
+            </option>
+            <option value={"> Rp.10.000.000"}>{"> Rp.10.000.000"}</option>
+          </select>
         </div>
         <div className="input-control col-span-2">
           <label htmlFor="source">Source</label>
@@ -217,19 +260,21 @@ function CreateContent() {
 
 const CreateContentStyled = styled.form`
   > h1 {
-    font-size: 1.4rem; /* Slightly smaller title */
-    font-weight: 600;
+    font-size: 1.2rem; /* Slightly smaller title */
+    font-weight: 300;
     margin-bottom: 1rem;
+    padding: 0 4px;
   }
 
   .form-content {
     max-height: 60vh;
+    padding: 0 4px;
   }
 
-   scrollbar-width: thin;
+  scrollbar-width: thin;
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 2px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -266,12 +311,12 @@ const CreateContentStyled = styled.form`
   }
 
   .input-label {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #999;
   }
 
   .input-control {
-    font-weight: 300;
+    font-weight: 200;
 
     label {
       font-size: 0.8rem; /* Reduce label size */

@@ -18,12 +18,14 @@ model Lowker{
   title       String
   company     String
   description String?
+  qualification String?
   deadline    DateTime
   datePosted  DateTime
   duration    Int
   type        String
   location    String
-  salary      Float
+  salary      String
+  experience  String
   source      String
   createdBy   String
 

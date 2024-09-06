@@ -14,13 +14,13 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const task = await prisma.task.delete({
+    const lowker = await prisma.lowker.delete({
       where: {
         id,
       },
     });
 
-    return NextResponse.json(task);
+    return NextResponse.json(lowker);
   } catch (error) {
     console.log("ERROR DELETING LOWKER: ", error);
     return NextResponse.json({ error: "Error deleting lowker", status: 500 });

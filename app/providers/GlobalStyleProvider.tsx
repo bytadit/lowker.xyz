@@ -8,7 +8,7 @@ interface Props {
 }
 
 const GlobalStyles = styled.div`
-    padding: 1.5rem;
+    padding: 1.5rem 2.1rem;
     height: 100%;
     display: flex;
     gap: 1.5rem;

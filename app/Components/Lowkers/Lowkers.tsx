@@ -43,11 +43,13 @@ export default function Lowkers({ title, lowkers, isLogin }: Props) {
             title={lowker.title}
             company={lowker.company}
             description={lowker.description}
+            qualification={lowker.qualification}
             deadline={lowker.deadline}
             duration={lowker.duration}
             type={lowker.type}
             location={lowker.location}
             salary={lowker.salary}
+            experience={lowker.experience}
             source={lowker.source}
           />
         ))}

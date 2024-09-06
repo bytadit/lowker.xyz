@@ -15,11 +15,13 @@ export async function POST(req: Request) {
       title,
       company,
       description,
+      qualification,
       deadline,
       duration,
       type,
       location,
       salary,
+      experience,
       source,
     } = await req.json();
 
@@ -30,6 +32,8 @@ export async function POST(req: Request) {
       !duration ||
       !type ||
       !location ||
+      !salary ||
+      !experience ||
       !source
     ) {
       return NextResponse.json({
@@ -43,12 +47,14 @@ export async function POST(req: Request) {
         title,
         company,
         description,
+        qualification,
         deadline: new Date(deadline), // Ensure deadline is passed as a Date
         datePosted: new Date(),
         duration: parseInt(duration), // Ensure duration is an integer
         type,
         location,
-        salary: salary ? parseFloat(salary) : null, // Ensure salary is a number or null
+        salary,
+        experience,
         source,
         createdBy: userId,
       },
@@ -80,7 +86,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
   try {
     const { userId } = auth();
-    const {id, title, company, description, deadline, duration, type, location, salary, source } = await req.json();
+    const {id, title, company, description, qualification, deadline, duration, type, location, salary, experience, source } = await req.json();
 
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized", status: 401 });
@@ -94,11 +100,13 @@ export async function PUT(req: Request) {
         title,
         company,
         description,
+        qualification,
         deadline,
         duration,
         type,
         location,
         salary,
+        experience,
         source,
       },
     });
