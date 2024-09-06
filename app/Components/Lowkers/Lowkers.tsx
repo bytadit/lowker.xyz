@@ -15,9 +15,6 @@ interface Props {
 
 export default function Lowkers({ title, lowkers, isLogin }: Props) {
   const { theme, isLoading, openModal, modal } = useGlobalState();
-  React.useState(() => {
-    console.log(lowkers);
-  })
   return (
     <LowkerStyled theme={theme}>
       {modal && <Modal content={<CreateContent />} />}
@@ -28,32 +25,38 @@ export default function Lowkers({ title, lowkers, isLogin }: Props) {
         </button>
       )}
 
-      <div className="lowkers grid xl:grid-cols-2 grid-cols-1 gap-4 w-full">
-        {/* {isLogin && (
-          <button className="create-lowker" onClick={openModal}>
-            {add}
-            Add New Lowker
-          </button>
-        )} */}
-        {lowkers.map((lowker) => (
-          <LowkerItem
-            datePosted={lowker.datePosted}
-            key={lowker.id}
-            id={lowker.id}
-            title={lowker.title}
-            company={lowker.company}
-            description={lowker.description}
-            qualification={lowker.qualification}
-            deadline={lowker.deadline}
-            duration={lowker.duration}
-            type={lowker.type}
-            location={lowker.location}
-            salary={lowker.salary}
-            experience={lowker.experience}
-            source={lowker.source}
-          />
-        ))}
-      </div>
+      {!isLoading ? (
+        <div className="lowkers grid xl:grid-cols-2 grid-cols-1 gap-4 w-full">
+          {/* {isLogin && (
+        <button className="create-lowker" onClick={openModal}>
+          {add}
+          Add New Lowker
+        </button>
+      )} */}
+          {lowkers.map((lowker) => (
+            <LowkerItem
+              datePosted={lowker.datePosted}
+              key={lowker.id}
+              id={lowker.id}
+              title={lowker.title}
+              company={lowker.company}
+              description={lowker.description}
+              qualification={lowker.qualification}
+              deadline={lowker.deadline}
+              duration={lowker.duration}
+              type={lowker.type}
+              location={lowker.location}
+              salary={lowker.salary}
+              experience={lowker.experience}
+              source={lowker.source}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="lowkers-loader w-full h-full flex items-center text-center justify-center">
+          <span className="loader"></span>
+        </div>
+      )}
     </LowkerStyled>
   );
 }

@@ -31,6 +31,7 @@ import {
   FaEllipsisV,
   FaEdit,
   FaRegTrashAlt,
+  FaExpand
 } from "react-icons/fa"; // Import icons
 import { FaPerson, FaRegBookmark } from "react-icons/fa6"; // Import icons
 
@@ -75,7 +76,7 @@ export default function LowkerItem({
           <h1 className="flex-grow truncate">{title}</h1>
           <div className="card-icon flex flex-row gap-2">
             <button className="view">
-              <FaEye />
+              <FaExpand />
             </button>
             <button className="bookmark">
               <FaRegBookmark />
@@ -154,7 +155,7 @@ const LowkerItemStyled = styled.div`
     }
     p {
       color: ${(props) => props.theme.colorGrey};
-      font-size: 0.9rem;
+      font-size: 1rem;
     }
   }
 

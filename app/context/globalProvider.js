@@ -91,10 +91,10 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const checkDeadline = (deadline) => {
-    const now = new Date();
-    return deadline < now 
-      ? "Expired Deadline" 
-      : formatDistanceToNow(deadline, { addSuffix: true });
+    const now = new Date(); // Current date and time
+    return now > deadline 
+      ? `Expired ${formatDistanceToNow(new Date(deadline), { addSuffix: true })}` 
+      : `${formatDistanceToNow(new Date(deadline), { addSuffix: true })}`;
   };
 
   return (

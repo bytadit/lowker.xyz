@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 import Button from "../Button/Button";
+import { IoMdClose } from "react-icons/io";
 import { add } from "@/app/utils/Icons";
 
 function CreateContent() {
@@ -13,11 +14,11 @@ function CreateContent() {
   const [description, setDescription] = useState("");
   const [qualification, setQualification] = useState("");
   const [deadline, setDeadline] = useState("");
-  const [duration, setDuration] = useState(0);
-  const [type, setType] = useState("");
+  const [duration, setDuration] = useState(1);
+  const [type, setType] = useState("Full Time");
   const [location, setLocation] = useState("");
-  const [salary, setSalary] = useState("");
-  const [experience, setExperience] = useState("");
+  const [salary, setSalary] = useState("< Rp.1000.000");
+  const [experience, setExperience] = useState("Undergraduate");
   const [source, setSource] = useState("");
 
   const { theme, allLowkers, closeModal } = useGlobalState();
@@ -96,7 +97,10 @@ function CreateContent() {
 
   return (
     <CreateContentStyled onSubmit={handleSubmit} theme={theme}>
-      <h1>Create a Lowker</h1>
+      <div className="flex flex-row justify-between mb-6">
+        <h1>Create a Lowker</h1>
+        <button type="button" onClick={closeModal} className="close"><IoMdClose size={30} /></button>
+      </div>
       <div className="form-content grid grid-cols-4 gap-2 mb-4 overflow-y-auto">
         <div className="input-control col-span-2">
           <label htmlFor="title">Title</label>
@@ -260,7 +264,7 @@ function CreateContent() {
 
 const CreateContentStyled = styled.form`
   > h1 {
-    font-size: 1.2rem; /* Slightly smaller title */
+    font-size: 1.5rem; /* Slightly smaller title */
     font-weight: 300;
     margin-bottom: 1rem;
     padding: 0 4px;
@@ -274,7 +278,7 @@ const CreateContentStyled = styled.form`
   scrollbar-width: thin;
 
   ::-webkit-scrollbar {
-    width: 2px;
+    width: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
